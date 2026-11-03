@@ -14,131 +14,144 @@ class Raithu360App extends StatelessWidget {
       title: 'RAITHU 360',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: const Color(0xFFF5F8F4),
       ),
-      home: const HomeScreen(),
+      home: const HomePage(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  final List<Map<String, dynamic>> services = const [
-    {'icon': Icons.cloud, 'name': 'Weather'},
-    {'icon': Icons.agriculture, 'name': 'Farming Tips'},
-    {'icon': Icons.currency_rupee, 'name': 'Market Prices'},
-    {'icon': Icons.grass, 'name': 'Seeds & Fertilizers'},
-    {'icon': Icons.school, 'name': 'Education'},
-    {'icon': Icons.work, 'name': 'Jobs'},
-    {'icon': Icons.store, 'name': 'Buy & Sell'},
-    {'icon': Icons.account_balance, 'name': 'Government Schemes'},
-    {'icon': Icons.chat, 'name': 'Chat'},
-    {'icon': Icons.newspaper, 'name': 'News'},
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
+
+  final List<Map<String, dynamic>> services = [
+    {'name': 'Weather', 'icon': Icons.cloud, 'desc': 'Weather updates and rain alerts'},
+    {'name': 'Farming Tips', 'icon': Icons.agriculture, 'desc': 'Useful farming information'},
+    {'name': 'Market Prices', 'icon': Icons.currency_rupee, 'desc': 'Mandi and crop price information'},
+    {'name': 'Seeds & Fertilizers', 'icon': Icons.grass, 'desc': 'Seeds and fertilizer information'},
+    {'name': 'Education', 'icon': Icons.school, 'desc': 'Study materials and scholarships'},
+    {'name': 'Jobs', 'icon': Icons.work, 'desc': 'Government and private job information'},
+    {'name': 'Buy & Sell', 'icon': Icons.store, 'desc': 'Agriculture products marketplace'},
+    {'name': 'Government Schemes', 'icon': Icons.account_balance, 'desc': 'Farmer welfare schemes'},
+    {'name': 'Chat', 'icon': Icons.chat, 'desc': 'Connect with other users'},
+    {'name': 'News', 'icon': Icons.newspaper, 'desc': 'Latest news and updates'},
   ];
+
+  void openService(Map<String, dynamic> service) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ServicePage(
+          title: service['name'],
+          description: service['desc'],
+          icon: service['icon'],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.green.shade700,
+        foregroundColor: Colors.white,
         title: const Text(
-          '🌾 RAITHU 360',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          'RAITHU 360',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: const [
-          Icon(Icons.notifications, color: Colors.white),
-          SizedBox(width: 15),
+      ),
+      body: selectedIndex == 0
+          ? homeContent()
+          : ServicePage(
+              title: ['Home', 'Farming', 'Market', 'Chat', 'Profile'][selectedIndex],
+              description: 'This section is coming soon.',
+              icon: Icons.construction,
+            ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.green.shade800,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.agriculture), label: 'Farming'),
+          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
-      body: SingleChildScrollView(
+    );
+  }
+
+  Widget homeContent() {
+    return SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Welcome to RAITHU 360!',
-              style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-              ),
+              'Farmers First. Everyone Connected.',
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 6),
-            const Text('Farmers First. Everyone Connected.'),
+            const SizedBox(height: 8),
+            const Text('Welcome to RAITHU 360'),
             const SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Everything You Need',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'One App for Every Indian',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 22),
-            const Text(
-              'Explore Services',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: services.length,
-              gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 1.3,
+                childAspectRatio: 1.15,
               ),
               itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade50,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: Colors.green.shade100),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        services[index]['icon'],
-                        color: Colors.green,
-                        size: 32,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        services[index]['name'],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                final service = services[index];
+                return InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () => openService(service),
+                  child: Card(
+                    elevation: 2,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          service['icon'],
+                          size: 38,
+                          color: Colors.green.shade700,
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            service['name'],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -146,32 +159,59 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    );
+  }
+}
+
+class ServicePage extends StatelessWidget {
+  final String title;
+  final String description;
+  final IconData icon;
+
+  const ServicePage({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+        backgroundColor: Colors.green.shade700,
+        foregroundColor: Colors.white,
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 75, color: Colors.green.shade700),
+              const SizedBox(height: 20),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'More features coming soon!',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.agriculture),
-            label: 'Farming',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            label: 'Market',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        ),
       ),
     );
   }
