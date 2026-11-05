@@ -45,6 +45,27 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void openService(Map<String, dynamic> service) {
+  if (service['name'] == 'Weather') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const WeatherPage(),
+      ),
+    );
+    return;
+  }
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ServicePage(
+        title: service['name'],
+        description: service['desc'],
+        icon: service['icon'],
+      ),
+    ),
+  );
+  }
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -162,7 +183,26 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+class WeatherPage extends StatelessWidget {
+  const WeatherPage({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Live Weather'),
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text(
+          'Weather feature coming next!',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+}
 class ServicePage extends StatelessWidget {
   final String title;
   final String description;
