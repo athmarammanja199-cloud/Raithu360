@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1066112548463",
+    "project_id": "raithu360",
+    "storage_bucket": "raithu360.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066112548463:android:702030756d55e5f105179a",
+        "android_client_info": {
+          "package_name": "com.example.raithu360"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_2bNkLBEVX4Q-dBfJewgpa5IUa2ScHts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
