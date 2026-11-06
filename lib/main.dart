@@ -45,27 +45,16 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void openService(Map<String, dynamic> service) {
-  if (service['name'] == 'Weather') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const WeatherPage(),
-      ),
-    );
-    return;
-  }
+    if (service['name'] == 'Weather') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WeatherPage(),
+        ),
+      );
+      return;
+    }
 
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => ServicePage(
-        title: service['name'],
-        description: service['desc'],
-        icon: service['icon'],
-      ),
-    ),
-  );
-  }
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -106,11 +95,26 @@ class _HomePageState extends State<HomePage> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.agriculture), label: 'Farming'),
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.agriculture),
+            label: 'Farming',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.store),
+            label: 'Market',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
       ),
     );
@@ -125,7 +129,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             const Text(
               'Farmers First. Everyone Connected.',
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             const Text('Welcome to RAITHU 360'),
@@ -134,7 +141,8 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: services.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
@@ -142,6 +150,7 @@ class _HomePageState extends State<HomePage> {
               ),
               itemBuilder: (context, index) {
                 final service = services[index];
+
                 return InkWell(
                   borderRadius: BorderRadius.circular(16),
                   onTap: () => openService(service),
@@ -161,7 +170,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 10),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                          ),
                           child: Text(
                             service['name'],
                             textAlign: TextAlign.center,
@@ -183,6 +194,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});
 
@@ -203,6 +215,7 @@ class WeatherPage extends StatelessWidget {
     );
   }
 }
+
 class ServicePage extends StatelessWidget {
   final String title;
   final String description;
@@ -229,7 +242,11 @@ class ServicePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 75, color: Colors.green.shade700),
+              Icon(
+                icon,
+                size: 75,
+                color: Colors.green.shade700,
+              ),
               const SizedBox(height: 20),
               Text(
                 title,
