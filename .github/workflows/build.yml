@@ -39,3 +39,4 @@ jobs:
         with:
           name: RAITHU-360-APK
           path: build/app/outputs/flutter-apk/app-release.apk
+          
